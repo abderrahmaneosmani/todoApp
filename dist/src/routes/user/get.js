@@ -10,8 +10,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
+// initialize  prisma
 const prisma = new client_1.PrismaClient();
 exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const allUser = yield prisma.user.findMany();
-    res.status(200).json(allUser);
+    try {
+        let id = Number(req.params.id);
+        // find user by id in database
+        const user = yield prisma.user.findMany({
+            where: {
+                id: id,
+                activeStatus: 'active',
+            },
+        });
+        //send response to client
+        res.status(200).json({ data: user });
+    }
+    catch (error) {
+        res.status(400).json({ errors: error });
+    }
 });

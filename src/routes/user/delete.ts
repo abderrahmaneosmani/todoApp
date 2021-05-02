@@ -6,14 +6,24 @@ import {PrismaClient} from '@prisma/client';
 const prisma = new PrismaClient();
 export default async (req: Request, res: Response): Promise<void> => {
 	try {
-		// find all users in database
-		const allUser = await prisma.user.findMany({
+		// get id
+
+		let id = Number(req.params.id);
+
+		// soft delete user
+		const data: any = {
+			activeStatus: 'delete',
+		};
+
+		// find user by id in database
+		const user = await prisma.user.update({
 			where: {
-				activeStatus: 'active',
+				id: id,
 			},
+			data,
 		});
 		//send response to client
-		res.status(200).json({data: allUser});
+		res.status(200).json({data: 'user deleted successfully '});
 	} catch (error) {
 		res.status(400).json({errors: error});
 	}
