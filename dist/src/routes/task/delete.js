@@ -10,36 +10,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
-const express_validator_1 = require("express-validator");
+// initialize  prisma
 const prisma = new client_1.PrismaClient();
 exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // get id form req params
-        const id = Number(req.params.id);
-        // Finds the validation errors in this request and wraps them in an object with handy functions
-        const errors = express_validator_1.validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        // create constructor for user
-        const { username, password } = req.body;
-        //create user object
+        // get id
+        let id = Number(req.params.id);
+        // soft delete task
         const data = {
-            username,
-            password,
+            activeStatus: 'delete',
         };
-        // update  user in database
-        const updateUser = yield prisma.user.update({
+        // find task by id in database
+        const task = yield prisma.task.update({
             where: {
                 id: id,
             },
             data,
         });
-        // send response to client
-        res.status(200).json({ user: updateUser });
-        // send error to client
+        //send response to client
+        res.status(200).json({ data: 'task deleted successfully ' });
     }
     catch (error) {
-        res.json({ errors: error });
+        res.status(400).json({ errors: error });
     }
 });
