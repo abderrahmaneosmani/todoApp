@@ -18,6 +18,7 @@ model User {
   email   String   @unique
   password String 
   activeStatus String @default("active")
+  tasks Task []
 
 
 }
@@ -30,13 +31,20 @@ listId Int
 createdAt DateTime @default(now())
 updatedAt DateTime @default(now())
 activeStatus String @default("active")
+user User @relation(fields: [userId],references:[id])
+list List @relation(fields: [listId],references:[id])
+
 
 }
 model List {
 id Int @default(autoincrement() ) @id
 title String
+userId Int
+taskId Int
 createdAt DateTime @default(now())
 updatedAt DateTime @default(now())
 activeStatus String @default("active")
+task Task []
+
   
 }

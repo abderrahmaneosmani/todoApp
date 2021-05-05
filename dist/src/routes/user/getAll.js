@@ -19,6 +19,9 @@ exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             where: {
                 activeStatus: 'active',
             },
+            include: {
+                tasks: true,
+            },
         });
         //send response to client
         res.status(200).json({ data: allUser });

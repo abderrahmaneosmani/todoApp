@@ -6,17 +6,17 @@ import {PrismaClient} from '@prisma/client';
 const prisma = new PrismaClient();
 export default async (req: Request, res: Response): Promise<void> => {
 	try {
-		// find all users in database
-		const allUser = await prisma.user.findMany({
+		// find all list in database
+		const allLists = await prisma.list.findMany({
 			where: {
 				activeStatus: 'active',
 			},
 			include: {
-				tasks: true,
+				task: true,
 			},
 		});
 		//send response to client
-		res.status(200).json({data: allUser});
+		res.status(200).json({data: allLists});
 	} catch (error) {
 		res.status(400).json({errors: error});
 	}
