@@ -19,3 +19,6 @@ $ npm install
 
 ```
 $ npm run dev
+
+![GitHub Logo](/images/add user.png)
+Format: ![Alt Text](url)
