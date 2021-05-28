@@ -19,11 +19,3 @@ $ npm install
 
 ```
 $ npm run dev
-<img src="https://user-images.githubusercontent.com/57019114/119557798-a52a5800-bd6e-11eb-8a94-ac0f165e71ea.png">
-
-![]()
-
-
-
-![](https://user-images.githubusercontent.com/57019114/119557807-a8bddf00-bd6e-11eb-9de0-e0e2ce70c7ff.png)
-
