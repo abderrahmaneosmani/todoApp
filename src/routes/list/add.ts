@@ -12,24 +12,24 @@ export default async (req: Request, res: any): Promise<void> => {
 			return res.status(400).json({errors: errors.array()});
 		}
 
-		// create constructor for task
-		const {title, userId, listId} = req.body;
+		// create constructor for list
+		const {title, userId,taskId} = req.body;
 
-		//create task object
+		//create list object
 
 		const data: any = {
 			title,
 			userId,
-			listId,
+			taskId
 		};
 
-		// create task in database
-		const addTask = await prisma.task.create({
+		// create list in database
+		const addList = await prisma.list.create({
 			data,
 		});
 		// send response to client
 
-		res.status(201).json({task: addTask});
+		res.status(201).json({list: addList});
 		// send error to client
 	} catch (error) {
 		res.json({errors: error});

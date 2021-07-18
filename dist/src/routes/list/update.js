@@ -10,25 +10,41 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
-// initialize  prisma
+const express_validator_1 = require("express-validator");
 const prisma = new client_1.PrismaClient();
 exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let id = Number(req.params.id);
-        // find user by id in database
-        const user = yield prisma.user.findMany({
+        // get id form req params
+        const id = Number(req.params.id);
+        // if params is not a number send status code 404
+        if (Number(isNaN(id)) === 1) {
+            res.statusCode = 404;
+        }
+        // Finds the validation errors in this request and wraps them in an object with handy functions
+        const errors = express_validator_1.validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        // create constructor for list
+        const { title, userId, taskId } = req.body;
+        //create list object
+        const data = {
+            title,
+            userId,
+            taskId,
+        };
+        // update  list in database
+        const updateList = yield prisma.list.update({
             where: {
                 id: id,
-                activeStatus: 'active',
             },
-            include: {
-                tasks: true
-            }
+            data,
         });
-        //send response to client
-        res.status(200).json({ data: user });
+        // send response to client
+        res.status(200).json({ user: updateList });
+        // send error to client
     }
     catch (error) {
-        res.status(400).json({ errors: error });
+        res.json({ errors: error });
     }
 });

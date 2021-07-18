@@ -11,6 +11,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			where: {
 				activeStatus: 'active',
 			},
+		
 		});
 		//send response to client
 		res.status(200).json({data: allTasks});

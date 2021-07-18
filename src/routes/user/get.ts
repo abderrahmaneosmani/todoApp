@@ -13,6 +13,9 @@ export default async (req: Request, res: Response): Promise<void> => {
 				id: id,
 				activeStatus: 'active',
 			},
+			include:{
+				tasks:true
+			}
 		});
 		//send response to client
 		res.status(200).json({data: user});

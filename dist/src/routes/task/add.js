@@ -19,9 +19,9 @@ exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        // create constructor for user
+        // create constructor for task
         const { title, userId, listId } = req.body;
-        //create user object
+        //create task object
         const data = {
             title,
             userId,
@@ -32,7 +32,7 @@ exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             data,
         });
         // send response to client
-        res.status(201).json({ user: addTask });
+        res.status(201).json({ task: addTask });
         // send error to client
     }
     catch (error) {

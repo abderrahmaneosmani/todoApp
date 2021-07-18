@@ -14,19 +14,21 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // get id
         let id = Number(req.params.id);
-        // find user by id in database
-        const user = yield prisma.user.findMany({
+        // soft delete list
+        const data = {
+            activeStatus: 'delete',
+        };
+        // find list by id in database
+        const list = yield prisma.list.update({
             where: {
                 id: id,
-                activeStatus: 'active',
             },
-            include: {
-                tasks: true
-            }
+            data,
         });
         //send response to client
-        res.status(200).json({ data: user });
+        res.status(200).json({ data: 'list deleted successfully ' });
     }
     catch (error) {
         res.status(400).json({ errors: error });
