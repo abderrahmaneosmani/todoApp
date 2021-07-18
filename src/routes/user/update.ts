@@ -28,7 +28,7 @@ export default async (req: Request, res: any): Promise<void> => {
 		};
 
 		// update  user in database
-		const addUser = await prisma.user.update({
+		const updateUser = await prisma.user.update({
 			where: {
 				id: id,
 			},
@@ -36,7 +36,7 @@ export default async (req: Request, res: any): Promise<void> => {
 		});
 		// send response to client
 
-		res.status(200).json({user: data});
+		res.status(200).json({user: updateUser});
 		// send error to client
 	} catch (error) {
 		res.json({errors: error});

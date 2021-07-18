@@ -14,29 +14,25 @@ const express_validator_1 = require("express-validator");
 const prisma = new client_1.PrismaClient();
 exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // get id form req params
-        const id = Number(req.params.id);
         // Finds the validation errors in this request and wraps them in an object with handy functions
         const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
         // create constructor for user
-        const { username, password } = req.body;
+        const { title, userId, listId } = req.body;
         //create user object
         const data = {
-            username,
-            password,
+            title,
+            userId,
+            listId,
         };
-        // update  user in database
-        const updateUser = yield prisma.user.update({
-            where: {
-                id: id,
-            },
+        // create task in database
+        const addTask = yield prisma.task.create({
             data,
         });
         // send response to client
-        res.status(200).json({ user: updateUser });
+        res.status(201).json({ user: addTask });
         // send error to client
     }
     catch (error) {

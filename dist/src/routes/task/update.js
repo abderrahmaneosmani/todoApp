@@ -16,27 +16,32 @@ exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // get id form req params
         const id = Number(req.params.id);
+        // if params is not a number send status code 404
+        if (Number(isNaN(id)) === 1) {
+            res.statusCode = 404;
+        }
         // Finds the validation errors in this request and wraps them in an object with handy functions
         const errors = express_validator_1.validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        // create constructor for user
-        const { username, password } = req.body;
-        //create user object
+        // create constructor for task
+        const { title, userId, listId } = req.body;
+        //create task object
         const data = {
-            username,
-            password,
+            title,
+            userId,
+            listId,
         };
-        // update  user in database
-        const updateUser = yield prisma.user.update({
+        // update  task in database
+        const updateTask = yield prisma.task.update({
             where: {
                 id: id,
             },
             data,
         });
         // send response to client
-        res.status(200).json({ user: updateUser });
+        res.status(200).json({ user: updateTask });
         // send error to client
     }
     catch (error) {

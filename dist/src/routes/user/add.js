@@ -32,7 +32,7 @@ exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             data,
         });
         // send response to client
-        res.status(201).json({ user: data });
+        res.status(201).json({ user: addUser });
         // send error to client
     }
     catch (error) {

@@ -11,6 +11,7 @@ const getAll_1 = __importDefault(require("./getAll"));
 const get_1 = __importDefault(require("./get"));
 const delete_1 = __importDefault(require("./delete"));
 const user = express_1.Router();
+// get all users
 user.get('/', getAll_1.default);
 //handle request
 user.post('/add', 

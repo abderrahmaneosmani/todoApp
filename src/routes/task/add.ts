@@ -13,23 +13,23 @@ export default async (req: Request, res: any): Promise<void> => {
 		}
 
 		// create constructor for user
-		const {username, email, password} = req.body;
+		const {title, userId, listId} = req.body;
 
 		//create user object
 
 		const data: any = {
-			username,
-			email,
-			password,
+			title,
+			userId,
+			listId,
 		};
 
-		// create user in database
-		const addUser = await prisma.user.create({
+		// create task in database
+		const addTask = await prisma.task.create({
 			data,
 		});
 		// send response to client
 
-		res.status(201).json({user: addUser});
+		res.status(201).json({user: addTask});
 		// send error to client
 	} catch (error) {
 		res.json({errors: error});
